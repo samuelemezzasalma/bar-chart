@@ -7,13 +7,13 @@
 	import BarChart from "$lib/components/BarChart.svelte";
 
 	export let data = {allGdpData};
-  const allGdpData = JSON.stringify(data);
+  const allGdpData = data;
 </script>
 
 <div class="text-column">
 	<h1 id="title">Bar Chart</h1>
-		{allGdpData}
-	<!-- <BarChart /> -->
+		<!-- {allGdpData} -->
+	<BarChart {allGdpData} />
 
 
 
