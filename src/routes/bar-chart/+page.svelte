@@ -1,21 +1,17 @@
 <svelte:head>
-	<title>About</title>
-	<meta name="description" content="About this app" />
+	<title>Bar Chart</title>
+	<meta name="description" content="Bar Chart example" />
 </svelte:head>
 
+<script>
+	import BarChart from "$lib/components/BarChart.svelte";
+</script>
+
 <div class="text-column">
-	<h1>Bar Chart</h1>
+	<h1 id="title">Bar Chart</h1>
 
-	<p>
-		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
-		following into your command line and following the prompts:
-	</p>
+	<BarChart />
 
-	<pre>npm create svelte@latest</pre>
 
-	<p>
-		The page you're looking at is purely static HTML, with no client-side interactivity needed.
-		Because of that, we don't need to load any JavaScript. Try viewing the page's source, or opening
-		the devtools network panel and reloading.
-	</p>
+
 </div>
