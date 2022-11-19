@@ -9,7 +9,8 @@ export const csr = dev;
 export const prerender = true;
 
 export async function load({ fetch }) {
-	const response = await fetch("/api/search");
+	const response = await fetch('/api/GDP-data.json');
 	const allGdpData = await response.json();
+	console.log(allGdpData);
 	return allGdpData;
 }

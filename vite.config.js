@@ -5,7 +5,7 @@ const config = {
 	server: {
 		proxy: {
 			'/api': {
-				target: 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master',
+				target: 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/',
 				changeOrigin: true,
 				secure: false,
 				rewrite: (path) => path.replace(/^\/api/, '')

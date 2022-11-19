@@ -7,11 +7,7 @@
 	import BarChart from "$lib/components/BarChart.svelte";
 
 	export let data = {allGdpData};
-  const {allGdpData} = data
-	console.log(data)
-
-	// export let data = allGdpData;
-  // const allGdpData = data
+  const allGdpData = JSON.stringify(data);
 </script>
 
 <div class="text-column">
