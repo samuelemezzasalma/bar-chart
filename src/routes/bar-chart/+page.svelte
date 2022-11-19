@@ -6,14 +6,18 @@
 <script>
 	import BarChart from "$lib/components/BarChart.svelte";
 
-	export let data: {allGdpData};
+	export let data = {allGdpData};
   const {allGdpData} = data
+	console.log(data)
+
+	// export let data = allGdpData;
+  // const allGdpData = data
 </script>
 
 <div class="text-column">
 	<h1 id="title">Bar Chart</h1>
-
-	<BarChart />
+		{allGdpData}
+	<!-- <BarChart /> -->
 
 
 
