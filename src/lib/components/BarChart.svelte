@@ -7,37 +7,41 @@
 
 	const w = 800;
 	const h = 600;
-       const padding = 60;
+       const padding = 15;
 
        let el;
+       console.log(el)
+       console.log(dataset.length)
+       console.log(w)
 
 	onMount(() => {
               const yScale = d3.scaleLinear()
-              .domain([d3.min(dataset, (d) => d[1]), d3.max(dataset, (d) => d[1])])
-              .range([h - padding, padding]);
+              .domain([0, d3.max(dataset, (d) => d[1])])
+              .range([h - padding, 0]);
+              
+              const xScale = d3.scaleLinear()
+              .domain([1, dataset.length])
+              .range([padding, w - padding]);
 
        
 
               const svg = d3.select(el)
                      .append("svg")
                      .attr("width", w)
-                     .attr("height", h);
+                     .attr("height", h)
+                     .attr("class", "test");
 	
               svg.selectAll("rect")
               .data(dataset)
               .enter()
               .append("rect")
-              .attr("x", (d, i) => i * 10)
-              .attr("y", (d, i) => h - (d[1] / 2))
-              .attr("width", 5)
-              .attr("height", (d, i) => d[1] / 2)
+              .attr("x", (d, i) => xScale(i))
+              .attr("y", (d, i) => yScale(d[1]))
+              .attr("width", 2)
+              .attr("height", (d, i) => yScale(h - d[1]))
               .attr("fill", "navy")
               .attr("class", "bar")
 	});
-
-//     const xScale = d3.scaleLinear()
-//                      .domain([0, d3.max(dataset, (d) => d[0])])
-//                      .range([padding, w - padding]);
 
     
 
@@ -54,11 +58,17 @@
 </svg> -->
 
 <style>
-.chart :global(div) {
+/* :global(div) */
+svg {
+       border: 1px solid black;
+}
+
+.chart  {
+              /* border: 1px solid black; */
 		font: 10px sans-serif;
-		background-color: steelblue;
+		/* background-color: steelblue; */
 		text-align: right;
-		padding: 3px;
+		/* padding: 3px; */
 		margin: 1px;
 		color: white;
 	}
