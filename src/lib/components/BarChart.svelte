@@ -14,8 +14,7 @@
        console.log(dataset.length)
        console.log(w)
 
-	onMount(() => {
-              const yScale = d3.scaleLinear()
+       const yScale = d3.scaleLinear()
               .domain([0, d3.max(dataset, (d) => d[1])])
               .range([h - padding, 0]);
               
@@ -43,6 +42,28 @@
               .attr("height", (d, i) => yScale(h - d[1]))
               .attr("fill", "navy")
               .attr("class", "bar")
+
+       function drawChart() {
+              // get the current width of the div where the chart appear, and attribute it to Svg
+              currentWidth = parseInt(d3.select('.chart').style('width'), 10)
+              svg.attr("width", currentWidth)
+
+              // Update the X scale and Axis (here the 20 is just to have a bit of margin)
+              xScale.range([padding, currentWidth - padding]);
+              // xAxis.call(d3.axisBottom(x))
+
+              // Add the last information needed for the circles: their X position
+              // myCircles
+              // .attr("cx", function(d){ return x(d)})
+       }
+
+       // Add an event listener that run the function when dimension change
+       window.addEventListener('resize', drawChart );
+
+
+
+	onMount(() => {
+              drawChart()
 	});
 
     
