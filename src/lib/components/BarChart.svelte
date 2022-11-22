@@ -49,18 +49,11 @@
 
 </script>
 
-<!-- {JSON.stringify(dataset)}  -->
-
-<!-- x="400" y="400" -->
 
 <div bind:this={el} class="chart"></div>
 
-<!-- <svg  {w} {h}>
-
-</svg> -->
 
 <style>
-/* :global(div) */
 svg {
        border: 1px solid black;
 }
