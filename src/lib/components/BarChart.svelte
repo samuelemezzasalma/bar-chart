@@ -76,6 +76,12 @@
                      .attr("height", (d, i) => yScale(h - d[1]))
                      .attr("fill", "navy")
                      .attr("class", "bar")
+
+                     const xAxis = d3.axisBottom(xScale);
+
+                     svg.append("g")
+                     .attr("transform", "translate(0," + (h - padding) + ")")
+                     .call(xAxis);
               }
 
               drawChart();
