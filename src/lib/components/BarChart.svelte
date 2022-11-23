@@ -13,8 +13,6 @@
 
        let xScale;
        let yScale;
-       
-
 
 	onMount(() => {
               const resizeObserver = new ResizeObserver(entries => {
