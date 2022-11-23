@@ -2,6 +2,7 @@
        import { onMount } from 'svelte';
 	import * as d3 from 'd3';
 
+
 	export let allGdpData;
        const dataset = allGdpData.data
 
@@ -19,38 +20,26 @@
        // console.log(dataset.length)
        // console.log(w)
 
-       
-
-       function adaptChart() {
-              // console.log("inside")
-              // get the current width of the div where the chart appear, and attribute it to Svg
-              const currentWidth = parseInt(d3.select(el).style('width'), 10)
-              console.log(currentWidth);
-              d3.select(el).attr("width", currentWidth);
-
-              // Update the X scale and Axis (here the 20 is just to have a bit of margin)
-              xScale.range([padding, currentWidth - padding]);
-              // xAxis.call(d3.axisBottom(x))
-       }
-
-
 
 	onMount(() => {
               const resizeObserver = new ResizeObserver(entries => {
-              for (const entry of entries) {
-                     if (entry.contentBoxSize) {
-                            // Firefox implements `contentBoxSize` as a single content rect, rather than an array
-                            const boxWidth = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0].blockSize : entry.contentBoxSize.blockSize;
-                            // console.log(boxWidth)
-                     }
-              }
+              // for (const entry of entries) {
+              //        if (entry.contentBoxSize) {
+              //               // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+              //               boxWidth = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0].blockSize : entry.contentBoxSize.blockSize;
+              //               console.log(boxWidth)
+              //               adaptChart()
+              //        }
+              // }
               
-              // We're only watching one element
-              // const entry = entries.at(0);
+                     // We're only watching one element
+                     console.log(entries)
+                     const entry = entries.at(0);
 
-              //Get the block size
-              // boxWidth = entry.contentBoxSize[0].blockSize;
-              // console.log(boxWidth)
+                     //Get the block size
+                     boxWidth = entry.contentBoxSize[0].inlineSize;
+                     console.log(boxWidth)
+                     adaptChart(boxWidth)
               });
               resizeObserver.observe(el);
 
@@ -64,9 +53,15 @@
               .range([padding, boxWidth - padding]);
               console.log(boxWidth)
 
+              function adaptChart() {
+                     d3.select(".svg-content-responsive").attr("width", boxWidth);
+
+                     // Update the X scale and Axis (here the 20 is just to have a bit of margin)
+                     xScale.range([padding, boxWidth - padding]);
+                     // xAxis.call(d3.axisBottom(x))
+              }
+
               function drawChart() {
-                     console.log(boxWidth)
-                     console.log(dataset)
 
                      const svg = d3.select(el)
                      .append("svg")
@@ -81,7 +76,7 @@
                      .enter()
                      .append("rect")
                      .attr("x", (d, i) =>{
-                            return xScale((i + 1) * 2)
+                            return xScale((i + 1))
                      })
                      .attr("y", (d, i) => yScale(d[1]))
                      .attr("width", 1)
@@ -91,12 +86,11 @@
               }
 
               drawChart();
-               // Add an event listener that run the function when dimension change
-              // window.addEventListener('resize', adaptChart );
-              
 
-              return () => resizeObserver.unobserve(el);
-              // window.removeEventListener('resize', adaptChart);
+              return () => {
+                     resizeObserver.unobserve(el);
+              }
+              
 
 	});
 
@@ -105,7 +99,8 @@
 </script>
 
 
-<div bind:this={el} class="chart"></div>
+<div bind:this={el} class="chart">
+</div>
 
 
 <style>
