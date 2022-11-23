@@ -45,16 +45,6 @@
 		font-weight: bold;
 	}
 
-	.chart {
-		font: 10px sans-serif;
-		background-color: steelblue;
-		text-align: right;
-		padding: 3px;
-		margin: 1px;
-		color: white;
-		border: 1px solid black;
-	}
-
 	@media (min-width: 480px) {
 		footer {
 			padding: 12px 0;

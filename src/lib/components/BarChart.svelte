@@ -8,17 +8,12 @@
 
 	let el;
        let boxWidth;
-       
-       // let w = boxWidth
 	const h = 800;
        const padding = 15;
 
        let xScale;
        let yScale;
        
-       // console.log(el)
-       // console.log(dataset.length)
-       // console.log(w)
 
 
 	onMount(() => {
@@ -90,19 +85,13 @@
               return () => {
                      resizeObserver.unobserve(el);
               }
-              
-
 	});
-
-    
 
 </script>
 
 
 <div bind:this={el} class="chart">
 </div>
-
-
 <style>
        .chart :global(div) {
 		font: 10px sans-serif;
