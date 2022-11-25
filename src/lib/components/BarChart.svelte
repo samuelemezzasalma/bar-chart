@@ -39,7 +39,8 @@
               boxWidth = parseInt(d3.select(el).style("width").slice(0, -2), 10)
               const yScale = d3.scaleLinear()
               .domain([0, d3.max(dataset, (d) => d[1])])
-              .range([h - padding, 0]);
+              .range([h - padding, padding]);
+              console.log(h - padding)
                      
               const xScale = d3.scaleLinear()
               .domain([1, dataset.length])
@@ -71,16 +72,16 @@
                      .attr("x", (d, i) =>{
                             return xScale((i + 1))
                      })
-                     .attr("y", (d, i) => yScale(d[1]))
+                     .attr("y", (d, i) => yScale(h - d[1]))
                      .attr("width", 1)
-                     .attr("height", (d, i) => yScale(h - d[1]))
+                     .attr("height", h -padding)
                      .attr("fill", "navy")
                      .attr("class", "bar")
 
                      const xAxis = d3.axisBottom(xScale);
 
                      svg.append("g")
-                     .attr("transform", "translate(0," + (h - padding) + ")")
+                     .attr("transform", `translate(0, ${(h)})`)
                      .call(xAxis);
               }
 
@@ -97,20 +98,24 @@
 <div bind:this={el} class="chart">
 </div>
 <style>
-       .chart :global(div) {
-		font: 10px sans-serif;
-		background-color: steelblue;
-		text-align: right;
-		padding: 3px;
-		margin: 1px;
-		color: white;
+/* :global(div) */
+       .chart  {
+		/* font: 10px sans-serif; */
+		/* background-color: steelblue; */
+		/* text-align: right; */
+		/* padding: 3px; */
+		/* margin: 1px; */
+		/* color: white; */
               border: 1px solid black;
+              position: relative;
+              top: 0;
+              left: 0;
 	}
 
        .svg-content-responsive {
-              /* display: inline-block; */
-              /* position: absolute;
-              top: 10px;
-              left: 0; */
+              display: inline-block;
+              position: absolute;
+              top: 0;
+              left: 0;
        }
 </style>

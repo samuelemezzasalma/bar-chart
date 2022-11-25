@@ -10,16 +10,17 @@
 		<slot />
 	</main>
 
-	<footer>
+	<!-- <footer>
 		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
+	</footer> -->
 </div>
 
 <style>
+
 	.app {
 		display: flex;
 		flex-direction: column;
-		min-height: 100vh;
+		/* min-height: 100vh; */
 	}
 
 	main {
