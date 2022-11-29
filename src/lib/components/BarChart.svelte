@@ -1,121 +1,117 @@
 <script>
-       import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
 
-
 	export let allGdpData;
-       const dataset = allGdpData.data
+	const dataset = allGdpData.data;
 
 	let el;
-       let boxWidth;
+	let boxWidth;
 	const h = 800;
-       const padding = 15;
+	const padding = 15;
 
-       let xScale;
-       let yScale;
+	let xScale;
+	let yScale;
 
 	onMount(() => {
-              const resizeObserver = new ResizeObserver(entries => {
-              // for (const entry of entries) {
-              //        if (entry.contentBoxSize) {
-              //               // Firefox implements `contentBoxSize` as a single content rect, rather than an array
-              //               boxWidth = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0].blockSize : entry.contentBoxSize.blockSize;
-              //               console.log(boxWidth)
-              //               adaptChart()
-              //        }
-              // }
-              
-                     // We're only watching one element
-                     console.log(entries)
-                     const entry = entries.at(0);
+		const resizeObserver = new ResizeObserver((entries) => {
+			// for (const entry of entries) {
+			//        if (entry.contentBoxSize) {
+			//               // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+			//               boxWidth = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0].blockSize : entry.contentBoxSize.blockSize;
+			//               adaptChart()
+			//        }
+			// }
 
-                     //Get the block size
-                     boxWidth = entry.contentBoxSize[0].inlineSize;
-                     console.log(boxWidth)
-                     adaptChart(boxWidth)
-              });
-              resizeObserver.observe(el);
+			// We're only watching one element
+			const entry = entries.at(0);
 
-              boxWidth = parseInt(d3.select(el).style("width").slice(0, -2), 10)
-              const yScale = d3.scaleLinear()
-              .domain([0, d3.max(dataset, (d) => d[1])])
-              .range([h - padding, padding]);
-              console.log(h - padding)
-                     
-              const xScale = d3.scaleLinear()
-              .domain([1, dataset.length])
-              .range([padding, boxWidth - padding]);
-              console.log(boxWidth)
+			//Get the block size
+			boxWidth = entry.contentBoxSize[0].inlineSize;
+			adaptChart(boxWidth);
+		});
+		resizeObserver.observe(el);
 
-              function adaptChart() {
-                     d3.select(".svg-content-responsive").attr("width", boxWidth);
+		boxWidth = parseInt(d3.select(el).style('width').slice(0, -2), 10);
+		const yScale = d3
+			.scaleLinear()
+			.domain([0, d3.max(dataset, (d) => d[1])])
+			.range([0, h]);
 
-                     // Update the X scale and Axis (here the 20 is just to have a bit of margin)
-                     xScale.range([padding, boxWidth - padding]);
-                     // xAxis.call(d3.axisBottom(x))
-              }
+		const xScale = d3
+			.scaleLinear()
+			.domain([1, dataset.length])
+			.range([0, boxWidth]);
 
-              function drawChart() {
+		function adaptChart() {
+			d3.select('.svg-content-responsive').attr('width', boxWidth);
 
-                     const svg = d3.select(el)
-                     .append("svg")
-                     .attr("preserveAspectRatio", "xMinYMin meet")
-                     .attr("viewBox", `0 0 ${boxWidth} ${h}`)
-                     .attr("width", boxWidth)
-                     .attr("height", h)
-                     .attr("class", "svg-content-responsive");
-                     
-                     svg.selectAll("rect")
-                     .data(dataset)
-                     .enter()
-                     .append("rect")
-                     .attr("x", (d, i) =>{
-                            return xScale((i + 1))
-                     })
-                     .attr("y", (d, i) => yScale(h - d[1]))
-                     .attr("width", 1)
-                     .attr("height", h -padding)
-                     .attr("fill", "navy")
-                     .attr("class", "bar")
+			// Update the X scale and Axis (here the 20 is just to have a bit of margin)
+			xScale.range([0, boxWidth]);
+			// xAxis.call(d3.axisBottom(x))
+		}
 
-                     const xAxis = d3.axisBottom(xScale);
+		function drawChart() {
+			const svg = d3
+				.select(el)
+				.append('svg')
+				.attr('preserveAspectRatio', 'xMinYMin meet')
+				.attr('viewBox', `0 0 ${boxWidth} ${h}`)
+				.attr('width', boxWidth)
+				.attr('height', h)
+				.attr('class', 'svg-content-responsive');
 
-                     svg.append("g")
-                     .attr("transform", `translate(0, ${(h)})`)
-                     .call(xAxis);
-              }
+			svg
+				.selectAll('rect')
+				.data(dataset)
+				.enter()
+				.append('rect')
+				.attr('x', (d, i) => {
+					return xScale(i + 1);
+				})
+				.attr('y', (d, i) => {
+					return h - yScale(d[1])
+				})
+				.attr('width', boxWidth / dataset.length)
+				.attr('height', (d, i) => yScale(d[1]))
+				// .attr('transform', `translate(${60}, 0)`)
+				.attr('fill', 'navy')
+				.attr('class', 'bar');
 
-              drawChart();
+			const xAxis = d3.axisBottom(xScale);
 
-              return () => {
-                     resizeObserver.unobserve(el);
-              }
+			svg.append('g').attr('transform', `translate(0, ${h})`).call(xAxis);
+		}
+
+		drawChart();
+
+		return () => {
+			resizeObserver.unobserve(el);
+		};
 	});
-
 </script>
 
+<div bind:this={el} class="chart" />
 
-<div bind:this={el} class="chart">
-</div>
 <style>
-/* :global(div) */
-       .chart  {
+	/* :global(div) */
+	.chart {
 		/* font: 10px sans-serif; */
 		/* background-color: steelblue; */
 		/* text-align: right; */
 		/* padding: 3px; */
 		/* margin: 1px; */
 		/* color: white; */
-              border: 1px solid black;
-              position: relative;
-              top: 0;
-              left: 0;
+		border: 1px solid black;
+		position: relative;
+		top: 0;
+		left: 0;
 	}
 
-       .svg-content-responsive {
-              display: inline-block;
-              position: absolute;
-              top: 0;
-              left: 0;
-       }
+	.svg-content-responsive {
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
 </style>
