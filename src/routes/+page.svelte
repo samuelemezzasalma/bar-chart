@@ -8,9 +8,21 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
-	<h1>Data Visualization Projects</h1>
+<section class="main-section">
+	<h1 class="main-title">Data Visualization Projects</h1>
 </section>
 
 <style>
+
+	.main-section {
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.main-title {
+		text-align: center;
+	}
 </style>
