@@ -5,15 +5,18 @@
 
 <script>
 	import Scatterplot from "$lib/components/Scatterplot.svelte";
-
-
-  export let data = {cyclistData};
-  const cyclistData = data;
+	
+  export let data = cyclistData;
+	console.log(data);
 </script>
 
 <div class="text-column">
 	<h1 id="title">Scatterplot</h1>
-		<!-- {allGdpData} -->
+	{#each data as cyclist}
+	<p>
+		{JSON.stringify(cyclist)}
+	</p>
+	{/each}
     <Scatterplot {cyclistData} />
 
 </div>

@@ -11,6 +11,6 @@ export const prerender = true;
 export async function load({ fetch }) {
 	const response = await fetch('/api/cyclist-data.json');
 	const cyclistData = await response.json();
-	// console.log(allGdpData);
+	// console.log(cyclistData);
 	return cyclistData;
 }
