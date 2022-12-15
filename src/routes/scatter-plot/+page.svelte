@@ -7,16 +7,20 @@
 	import Scatterplot from "$lib/components/Scatterplot.svelte";
 	
   export let data = cyclistData;
-	console.log(data);
+  let cyclistList = [];
+  Object.keys(data).map((key) => {
+	cyclistList.push(data[key]);
+  })
+	console.log(cyclistList);
 </script>
 
 <div class="text-column">
 	<h1 id="title">Scatterplot</h1>
-	{#each data as cyclist}
+	{#each cyclistList as cyclist}
 	<p>
 		{JSON.stringify(cyclist)}
 	</p>
 	{/each}
-    <Scatterplot {cyclistData} />
+    <!-- <Scatterplot {cyclistData} /> -->
 
 </div>
