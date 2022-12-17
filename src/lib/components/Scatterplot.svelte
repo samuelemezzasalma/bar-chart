@@ -2,8 +2,8 @@
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 
-	export let cyclistData;
-	const dataset = cyclistData;
+	export let cyclistList;
+	const dataset = cyclistList;
 
 	let el;
 
@@ -48,6 +48,16 @@
 				.append('svg')
 				.attr('width', width + padding * 2)
 				.attr('height', h + padding * 2);
+
+				svg.selectAll("circle")
+				.data(dataset)
+				.enter()
+				.append("circle")
+				.attr("cx", (d) => d.Year)
+        		.attr("cy", (d) => parseFloat(d.Time))
+				.style("color", "black")
+        		.attr("r", 5);
+
 		}
 
 		drawChart();

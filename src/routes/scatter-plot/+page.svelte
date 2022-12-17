@@ -16,11 +16,11 @@
 
 <div class="text-column">
 	<h1 id="title">Scatterplot</h1>
-	{#each cyclistList as cyclist}
+	<!-- {#each cyclistList as cyclist}
 	<p>
 		{JSON.stringify(cyclist)}
 	</p>
-	{/each}
-    <!-- <Scatterplot {cyclistData} /> -->
+	{/each} -->
+    <Scatterplot {cyclistList} />
 
 </div>
